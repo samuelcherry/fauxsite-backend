@@ -10,6 +10,10 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
+app.listen(process.env.PORT, () => {
+  console.log("Server running");
+});
+
 async function testConnection() {
 	try{
 		const res = await pool.query('SELECT NOW()');
@@ -43,7 +47,6 @@ async function getUsers() {
 async function main() {
 	await testConnection();
 
-	await pool.end();
 }
 
 main();
