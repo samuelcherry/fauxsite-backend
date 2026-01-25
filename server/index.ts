@@ -6,9 +6,12 @@ const {Pool} = require('pg');
 require('dotenv').config();
 
 const pool = new Pool({
-	connectionString: process.env.DB_DIRECTCONNECT,
-	host: process.env.DB_HOST,
-	family: 4,
+  host: process.env.DB_HOST,
+  port: 5432,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  family: 4,                        // force IPv4
 });
 
 async function testConnection() {
