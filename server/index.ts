@@ -6,7 +6,7 @@ const {Pool} = require('pg');
 require('dotenv').config();
 
 const pool = new Pool({
-	connectionString: process.env.DB_CONNECTIONSTRING,
+	connectionString: process.env.DB_DIRECTCONNECT,
 	host: process.env.DB_HOST,
 	family: 4,
 });
