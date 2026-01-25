@@ -1,14 +1,16 @@
 //backend server that will take in HTTPS from Frontend and communicate locally with psql database
 //
 //
+
 const {Pool} = require('pg');
+require('dotenv').config();
 
 const pool = new Pool({
-	user: 'sam',
-	host: 'localhost',
-	database: 'fauxSite',
-	password: '',
-	port: 5432,
+	host: process.env.DB_HOST,
+	port: Number(process.env.DB_PORT),
+	database: process.env.DB_NAME,
+	user: process.env.DB_USER,
+	password: process.env.DB_password,
 });
 
 async function testConnection() {
@@ -43,10 +45,6 @@ async function getUsers() {
 
 async function main() {
 	await testConnection();
-
-//	await createUser('SamCherry', 'sam@internet.com');
-
-	await getUsers();
 
 	await pool.end();
 }
