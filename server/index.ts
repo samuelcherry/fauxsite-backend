@@ -1,8 +1,8 @@
-//backend server that will take in HTTPS from Frontend and communicate locally with psql database
+e/backend server that will take in HTTPS from Frontend and communicate locally with psql database
 //
 //
 const express = require('express');
-const app = express();
+const app:Express = express();
 const {Pool} = require('pg');
 const cors = require('cors');
 
@@ -57,4 +57,4 @@ async function main() {
 
 }
 
-main();
+//main();
