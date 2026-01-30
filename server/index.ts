@@ -21,7 +21,7 @@ app.listen(process.env.PORT, () => {
 });
 
 app.get('/users', (req: typeof Req, res: typeof Res) => {
-	getUsers();
+	res.status(200).json(getUsers());
 });
 
 async function createUser(username: string, email:string){
