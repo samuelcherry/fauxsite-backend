@@ -40,6 +40,7 @@ async function getUsers() {
 	try{
 		const result = await pool.query('SELECT * FROM users');
 		console.log("All users: ", result.rows);
+		return result;
 	}catch(err){
 		console.error("Error getting users", err);
 	}
