@@ -2,7 +2,7 @@
 //
 //
 const express = require('express');
-const type {Request, Response} = require('express');
+const {Request, Response} = require('express');
 const app = express();
 const {Pool} = require('pg');
 const cors = require('cors');
