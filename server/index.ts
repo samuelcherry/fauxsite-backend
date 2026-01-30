@@ -7,8 +7,9 @@ const app = express();
 const {Pool} = require('pg');
 const cors = require('cors');
 
+
 require('dotenv').config();
-app.use(cors())
+app.use(cors(*))
 
 const pool = new Pool({
   connectionString: process.env.DB_DIRECTCONNECT,
