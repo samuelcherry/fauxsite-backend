@@ -4,9 +4,10 @@
 const express = require('express');
 const app = express();
 const {Pool} = require('pg');
+const cors = require('cors');
 
 require('dotenv').config();
-
+app.use(cors())
 
 const pool = new Pool({
   connectionString: process.env.DB_DIRECTCONNECT,
@@ -16,6 +17,10 @@ const pool = new Pool({
 app.listen(process.env.PORT, () => {
   console.log("Server running");
 });
+
+app.get('/users', (req,res) => {
+	res.send('TEST USER')
+}
 
 async function testConnection() {
 	try{
