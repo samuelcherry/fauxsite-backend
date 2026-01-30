@@ -2,7 +2,7 @@
 //
 //
 const express = require('express');
-const {Request, Response} = require('express');
+const {request: Req, response: Res} = require('express');
 const app = express();
 const {Pool} = require('pg');
 const cors = require('cors');
@@ -19,7 +19,7 @@ app.listen(process.env.PORT, () => {
   console.log("Server running");
 });
 
-app.get('/users', (req: Request, res: Response) => {
+app.get('/users', (req: typeof Req, res: typeof Res) => {
 	res.send('TEST USER')
 });
 
