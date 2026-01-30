@@ -19,18 +19,9 @@ app.listen(process.env.PORT, () => {
   console.log("Server running");
 });
 
-app.get('/users', (req: Request,res: Response) => {
+app.get('/users', (req: Request, res: Response) => {
 	res.send('TEST USER')
-}
-
-async function testConnection() {
-	try{
-		const res = await pool.query('SELECT NOW()');
-		console.log('Connection successful', res.rows[0].now);
-	}catch(err){
-		console.error("Error connecting to PostgreSQL", err);
-	}
-}
+});
 
 async function createUser(username: string, email:string){
 	try{
@@ -52,10 +43,3 @@ async function getUsers() {
 		console.error("Error getting users", err);
 	}
 }
-
-async function main() {
-	await testConnection();
-
-}
-
-//main();
