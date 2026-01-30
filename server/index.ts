@@ -1,4 +1,4 @@
-e/backend server that will take in HTTPS from Frontend and communicate locally with psql database
+//backend server that will take in HTTPS from Frontend and communicate locally with psql database
 //
 //
 const express = require('express');
