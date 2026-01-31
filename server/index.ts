@@ -20,7 +20,7 @@ app.listen(process.env.PORT, () => {
   console.log("Server running");
 });
 
-app.get('/users', (req: typeof Req, res: typeof Res) => {
+app.get('/users',async (req: typeof Req, res: typeof Res) => {
 	try {
 		const users = await getUsers();
 		res.status(200).json(users);
