@@ -21,7 +21,12 @@ app.listen(process.env.PORT, () => {
 });
 
 app.get('/users', (req: typeof Req, res: typeof Res) => {
-	res.status(200).json(getUsers());
+	try {
+		const users = await getUsers();
+		res.status(200).json(users);
+	} catch(err) {
+		res.status(500).json({error: "failed to fetch users"});
+	}
 });
 
 async function createUser(username: string, email:string){
