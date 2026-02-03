@@ -29,6 +29,12 @@ app.get('/users',async (req: typeof Req, res: typeof Res) => {
 	}
 });
 
+app.post('/register', async(req: typeof Req, res: typeof Res) => {
+	try{
+		console.log(req)
+	}
+}
+
 async function createUser(username: string, email:string){
 	try{
 		const result = await pool.query(
