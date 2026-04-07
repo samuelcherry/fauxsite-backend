@@ -29,14 +29,7 @@ app.get("/users", async (req: typeof Req, res: typeof Res) => {
 });
 
 app.post("/register", async (req: typeof Req, res: typeof Res) => {
-  try {
-    console.log(req);
-  } catch (err) {
-    res.status(500).json({ error: "failed to register user" });
-  }
-});
-
-async function createUser(username: string, email: string) {
+  const { username, email } = req.body;
   try {
     const result = await pool.query(
       "INSERT INTO users(username, email) VALUES($1,$2) RETURNING id",
@@ -46,7 +39,9 @@ async function createUser(username: string, email: string) {
   } catch (err) {
     console.error("Error creating user", err);
   }
-}
+});
+
+async function createUser(username: string, email: string) {}
 
 async function getUsers() {
   try {
