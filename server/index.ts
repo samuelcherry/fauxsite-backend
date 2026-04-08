@@ -2,10 +2,11 @@ import express from "express";
 import { request, response } from "express";
 import { Pool } from "pg";
 import cors from "cors";
+import dotenv from "dotenv";
 
 const app = express();
 
-require("dotenv").config();
+dotenv.config();
 app.use(cors({ origin: "*" }));
 
 const pool = new Pool({
