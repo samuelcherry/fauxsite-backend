@@ -1,11 +1,9 @@
-//backend server that will take in HTTPS from Frontend and communicate locally with psql database
-//
-//
-const express = require("express");
-const { request: Req, response: Res } = require("express");
+import express from "express";
+import { request, response } from "express";
+import { Pool } from "pg";
+import cors from "cors";
+
 const app = express();
-const { Pool } = require("pg");
-const cors = require("cors");
 
 require("dotenv").config();
 app.use(cors({ origin: "*" }));
@@ -19,7 +17,7 @@ app.listen(process.env.PORT, () => {
   console.log("Server running");
 });
 
-app.get("/users", async (req: typeof Req, res: typeof Res) => {
+app.get("/users", async (req: typeof request, res: typeof response) => {
   try {
     const users = await getUsers();
     res.status(200).json(users);
@@ -28,7 +26,7 @@ app.get("/users", async (req: typeof Req, res: typeof Res) => {
   }
 });
 
-app.post("/register", async (req: typeof Req, res: typeof Res) => {
+app.post("/register", async (req: typeof request, res: typeof response) => {
   const { username, email } = req.body;
   try {
     const result = await pool.query(
