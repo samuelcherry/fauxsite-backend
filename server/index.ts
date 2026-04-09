@@ -42,7 +42,7 @@ app.post("/register", async (req: typeof request, res: typeof response) => {
     res.status(201).json({ id: result.rows[0].id });
   } catch (err) {
     console.error("Error creating user", err);
-    res.status(500).json({ error: "failed to create user" });
+    res.status(500).json({ error: "failed to create user", err });
   }
 });
 
