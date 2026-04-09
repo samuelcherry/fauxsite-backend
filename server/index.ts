@@ -28,11 +28,13 @@ app.get("/users", async (req: typeof request, res: typeof response) => {
 });
 
 app.post("/register", async (req: typeof request, res: typeof response) => {
-  const { username, email } = req.body;
+  const { username, email, password } = req.body;
   try {
     const result = await pool.query(
-      "INSERT INTO users(username, email) VALUES($1,$2) RETURNING id",
-      [username, email],
+      `INSERT INTO users(username, email, password)
+      VALUES($1,$2,$3)
+      RETURNING id`,
+      [username, email, password],
     );
     console.log(`User created with ID ${result.rows[0].id}`);
   } catch (err) {
