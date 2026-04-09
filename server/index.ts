@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors({ origin: "*" }));
 
 const pool = new Pool({
-  connectionString: process.env.DB_DIRECTCONNECT,
+  connectionString: process.env.DB_POOLCONNECT,
   ssl: { rejectUnauthorized: false },
 });
 
