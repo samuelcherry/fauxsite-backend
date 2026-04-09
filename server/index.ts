@@ -35,7 +35,7 @@ app.post("/register", async (req: typeof request, res: typeof response) => {
     const result = await pool.query(
       `INSERT INTO users(username, email, password)
       VALUES($1,$2,$3)
-      RETURNING id`,
+      RETURNING username`,
       [username, email, password],
     );
     console.log("test 2: ", result.rows[0]);
