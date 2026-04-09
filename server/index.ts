@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 const app = express();
 
 dotenv.config();
+app.use(express.json());
 app.use(cors({ origin: "*" }));
 
 const pool = new Pool({
