@@ -77,7 +77,7 @@ async function registerUser(username: string, email: string, password: string) {
 
 async function loginUser(email: string, password: string) {
   try {
-    const result = await pool.query(`Select * FROMT users WHERE email = $1`, [
+    const result = await pool.query(`Select * FROM users WHERE email = $1`, [
       email,
     ]);
     const user = result.rows[0];
