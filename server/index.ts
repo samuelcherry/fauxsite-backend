@@ -3,6 +3,7 @@ import { request, response } from "express";
 import { Pool } from "pg";
 import cors from "cors";
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
 
 const app = express();
 
@@ -30,22 +31,21 @@ app.get("/users", async (req: typeof request, res: typeof response) => {
 
 app.post("/register", async (req: typeof request, res: typeof response) => {
   const { username, email, password } = req.body;
-  console.log("test 1", username, email, password);
   try {
-    const result = await pool.query(
-      `INSERT INTO users(username, email, password)
-      VALUES($1,$2,$3)
-      RETURNING username`,
-      [username, email, password],
-    );
-    console.log("test 2: ", result.rows[0]);
-    res.status(201).json({ id: result.rows[0].id });
-  } catch (err: any) {
-    console.error("Error creating user", err);
-    res.status(500).json({
-      error: "failed to create user",
-      message: err.message,
-    });
+    const registeredUser = await registerUser(username, email, password);
+    res.status(201).json(registeredUser);
+  } catch (err) {
+    res.status(500).json({ error: "failed to register user", err });
+  }
+});
+
+app.post("/login", async (req: typeof request, res: typeof response) => {
+  const { email, password } = req.body;
+  try {
+    const loggedInUser = await loginUser(email, password);
+    res.status(200).json(loggedInUser);
+  } catch (err) {
+    res.status(500).json({ error: "failed to login user", err });
   }
 });
 
@@ -56,5 +56,41 @@ async function getUsers() {
     return result.rows;
   } catch (err) {
     console.error("Error getting users", err);
+  }
+}
+
+async function registerUser(username: string, email: string, password: string) {
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const result = await pool.query(
+      `INSERT INTO users(username, email, password)
+      VALUES($1,$2,$3)
+      RETURNING username`,
+      [username, email, hashedPassword],
+    );
+
+    return { id: result.rows[0].id };
+  } catch (err: any) {
+    console.error("failed to register user", err);
+  }
+}
+
+async function loginUser(email: string, password: string) {
+  try {
+    const result = await pool.query(`Select * FROMT users WHERE email = $1`, [
+      email,
+    ]);
+    const user = result.rows[0];
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      throw new Error("Invalid password");
+    }
+
+    return { username: result.rows[0].username };
+  } catch (err) {
+    throw new Error("failed to login user");
   }
 }
